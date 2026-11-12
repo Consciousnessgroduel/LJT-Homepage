@@ -2,9 +2,6 @@
 permalink: /
 title: "Junteng Liu"
 author_profile: true
-redirect_from:
-  - /about/
-  - /about.html
 ---
 
 I am a first-year PhD candidate at the HKUST NLP Group. My research focuses on natural language processing and machine learning. My research interests include LLM reasoning and reinforcement learning, hallucination in vision-language models (VLM), and LLM truthfulness and interpretability.
