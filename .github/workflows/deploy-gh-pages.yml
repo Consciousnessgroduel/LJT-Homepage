@@ -1,0 +1,78 @@
+name: Deploy site to gh-pages
+
+on:
+  push:
+    branches: ["master"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "gh-pages-deployment"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1.328.0
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+          cache-version: 0
+
+      - name: Install UglifyJS
+        run: npm install -g uglify-js
+
+      - name: Minify JS files
+        run: |
+          uglifyjs assets/js/plugins/jquery.greedy-navigation.js assets/js/_main.js assets/js/theme.js -c -m -o assets/js/main.min.js
+
+      - name: Build with Jekyll
+        run: bundle exec jekyll build --baseurl "/${{ github.event.repository.name }}"
+        env:
+          JEKYLL_ENV: production
+
+      - name: Add GitHub Pages marker
+        run: touch _site/.nojekyll
+
+      - name: Publish to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./_site
+          force_orphan: true
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com
+          commit_message: Deploy ${{ github.sha }} to gh-pages
+
+      - name: Check project Pages URL
+        shell: bash
+        run: |
+          set -u
+          owner_lc="${GITHUB_REPOSITORY_OWNER,,}"
+          repo_name="${GITHUB_EVENT_REPOSITORY_NAME}"
+          url="https://${owner_lc}.github.io/${repo_name}/"
+          for attempt in $(seq 1 18); do
+            code="$(curl -sS -L -o /tmp/ljt-homepage.html -w '%{http_code}' "$url" || true)"
+            echo "Attempt ${attempt}: ${url} returned HTTP ${code}"
+            if [ "$code" = "200" ] && grep -q "Junteng Liu" /tmp/ljt-homepage.html; then
+              echo "Published content was verified."
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "The gh-pages branch was published. Enable GitHub Pages from the gh-pages branch if the URL is not live yet."
+        env:
+          GITHUB_EVENT_REPOSITORY_NAME: ${{ github.event.repository.name }}
