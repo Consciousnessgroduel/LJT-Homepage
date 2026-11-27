@@ -22,7 +22,7 @@ Research Experience
 * Research Intern, Shanghai AI Lab (June 2023–December 2023)
   * Advisor: Prof. Yu Cheng
 * PhD candidate, HKUST NLP Group (2024–Present)
-  * The HKUST NLP Group is led by Professor Junxian He, Junteng Liu's PhD supervisor, who previously advised him during his undergraduate studies at SJTU.
+  * The HKUST NLP Group focuses on natural language processing research and is led by Professor Junxian He, Junteng Liu's PhD supervisor, who previously advised him during his undergraduate studies at SJTU.
 
 Research Interests
 ======
