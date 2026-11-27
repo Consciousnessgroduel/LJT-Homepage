@@ -14,7 +14,7 @@ Academic Background
 
 * **Ph.D. in Computer Science** (2024–Present) — Hong Kong University of Science and Technology (HKUST)
 * **B.Eng.** (2020–2024) — Shanghai Jiao Tong University (SJTU); graduated June 2024
-* **Award:** Ziyuan Honor Scholarship, Shanghai Jiao Tong University
+* **Award:** Zhiyuan Honor Scholarship, Shanghai Jiao Tong University
 
 Research Experience
 ======
