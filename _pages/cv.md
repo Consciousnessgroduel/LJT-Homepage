@@ -40,7 +40,7 @@ Skills
 
 Awards
 ======
-* Ziyuan Honor Scholarship, Shanghai Jiao Tong University
+* Zhiyuan Honor Scholarship, Shanghai Jiao Tong University
 
 Publications
 ======
